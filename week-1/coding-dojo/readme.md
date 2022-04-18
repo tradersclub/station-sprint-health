@@ -8,6 +8,7 @@
 - Explique qual sua linha de raciocínio;
 - A plateia só poderá ajudar 1 vez quando for solicitada;
 - O uso de google é permitido, mas foque em tirar dúvidas com seu par;
+- A duração será de no máximo 20 min por dupla;
 
 # Challenges:
 - [Challenge Example](./challenges/example)
