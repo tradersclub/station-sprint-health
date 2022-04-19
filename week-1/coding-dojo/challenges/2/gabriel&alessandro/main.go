@@ -1,40 +1,60 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-type jogo struct {
+const (
+	TESOURA = "tesoura"
+	PEDRA   = "pedra"
+	PAPEL   = "papel"
+)
+
+type game struct {
 	name   string
 	choice string
 }
 
 func main() {
-	jogo1 := jogo{name: "Gabriel", choice: "tesoura"}
-	jogo2 := jogo{name: "Alessandro", choice: "papel"}
+	game1 := game{name: "Gabriel", choice: "tesoura"}
+	game2 := game{name: "Alessandro", choice: "papel"}
 
-	fmt.Println(play(jogo2, jogo1))
+	fmt.Println(play(game2, game1))
 }
 
-func play(jogo1, jogo2 jogo) string {
-	var choices = make(map[string]int)
-	choices["tesoura"] = 0
-	choices["pedra"] = 1
-	choices["papel"] = 2
+func play(game1, game2 game) string {
 
-	if jogo1.choice == jogo2.choice {
+	var choices = make(map[string]int)
+	choices[TESOURA] = 0
+	choices[PEDRA] = 1
+	choices[PAPEL] = 2
+
+	if isDraw(strings.ToLower(game1.choice), strings.ToLower(game2.choice)) {
 		return "empatou"
 	}
 
-	if jogo1.choice == "papel" && jogo2.choice == "tesoura" {
-		return jogo2.name
+	if strings.ToLower(game1.choice) == PAPEL && game2.choice == TESOURA {
+		return game2.name
 	}
 
-	if jogo1.choice == "tesoura" && jogo2.choice == "papel" {
-		return jogo1.name
+	if game1.choice == TESOURA && game2.choice == PAPEL {
+		return game1.name
 	}
 
-	if choices[jogo1.choice] > choices[jogo2.choice] {
-		return jogo1.name
+	if choices[game1.choice] > choices[game2.choice] {
+		return game1.name
 	} else {
-		return jogo2.name
+		return game2.name
 	}
+}
+
+func isDraw(choice1, choice2 string) bool {
+	return choice1 == choice2
+}
+
+func comp(a, b int) {
+	// 1 > 0
+	// 1 > 2
+	// 0 > 2
 }
