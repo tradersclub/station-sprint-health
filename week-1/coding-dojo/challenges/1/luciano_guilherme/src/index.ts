@@ -8,25 +8,45 @@ const person = {
   birthday: 956026800000,
 };
 
-function isPalindrome(person: Person) {
-  const { personName } = person;
-  if (!personName) {
+const data = [
+  {
+    personName: "ana",
+    birthday: 956026800000,
+  },
+  {
+    personName: "Juliana",
+    birthday: 956026800000,
+  },
+];
+
+function isPalindrome(person: string) {
+  if (!person) {
     console.log("needs a person");
   }
 
-  const reversedName = personName.split("").reverse().join("");
-  console.log(reversedName)
+  const reversedName = person.split("").reverse().join("");
 
   let isPalindrome: boolean =
-    reversedName.toLowerCase() === personName.toLowerCase();
+    reversedName.toLowerCase() === person.toLowerCase();
 
   return isPalindrome;
 }
 
 function isHigherThanEightteen(birthday: number) {
-  // birthYear = new Date(birthday).getFullYear();
-  // const actualYear = new Date().getFullYear()
-  // return;
+  const birthYear = new Date().getFullYear() - new Date(birthday).getFullYear();
+  return birthYear >= 18;
 }
 
-console.log(isPalindrome(person));
+function personsCheck(persons: Person[]) {
+  persons.filter((person: Person) => {
+    if (
+      isPalindrome(person.personName) &&
+      isHigherThanEightteen(person.birthday)
+    ) {
+      return `${person.personName} is isHigherThanEightteen`;
+    }
+    return "not isHigherThanEightteen";
+  });
+}
+
+console.log(personsCheck(data));
