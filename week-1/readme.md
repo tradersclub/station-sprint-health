@@ -8,7 +8,6 @@
 ## Coding
 - [Coding Dojo](./coding-dojo/):
 - Refactoring: 
-    - Buscar por funções puras endo memorizadas sem necessidade, ajustar e cobrir de teste (front) (pair programming);
     - Coding Design e clean code (front/back) (pair programming);
 - Palestra - Apresentação pesquisa de usuário - Karine
 
