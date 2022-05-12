@@ -1,28 +1,39 @@
 package main
 
 import (
+	"fmt"
 	"image"
+	"image/png"
+	"os"
+
+	"github.com/nfnt/resize"
 )
 
-type ResizeImg interface {
-	Resize(width, height uint, img image.Image) image.Image
-}
-
-func (r *resizeImg) Resize(width, height uint, img image.Image) image.Image {
-	return img
-}
-
-func NewResizeImg() ResizeImg {
-}
-
-func resize(res ResizeImg, width, height uint, img image.Image) {
-	res.Resize(width, height, img)
+func nfntAdapter(width, height uint, img image.Image) image.Image {
+	return resize.Resize(width, height, img, resize.Lanczos3)
 }
 
 func main() {
 
-	var image image.Image
+	file, err := os.Open("376500-middle.png")
+	if err != nil {
+		fmt.Println("erro pegar imagem")
+	}
 
-	resizeTest := resizeImg.Resize(10, 20, image)
+	img, err := png.Decode(file)
+	if err != nil {
+		fmt.Println("erro decode imagem")
+	}
+
+	resizedImage := nfntAdapter(100, 50, img)
+
+	out, err := os.Create("gosymbo.png")
+	if err != nil {
+		fmt.Println("erro decode imagem")
+	}
+
+	defer out.Close()
+
+	png.Encode(out, resizedImage)
 
 }
