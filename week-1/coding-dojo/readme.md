@@ -10,6 +10,9 @@
 - O uso de google é permitido, mas foque em tirar dúvidas com seu par;
 - A duração será de no máximo 30 min por dupla;
 
+# Utils
+- [Template TS](../../example-ts)
+
 # Challenges:
 - [Challenge 1](./challenges/1)
 - [Challenge 2](./challenges/2)
