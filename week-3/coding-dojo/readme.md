@@ -15,4 +15,3 @@
 # Challenges:
 - [Challenge 1](./challenges/1)
 - [Challenge 2](./challenges/2)
-- [Challenge 3](./challenges/3)
