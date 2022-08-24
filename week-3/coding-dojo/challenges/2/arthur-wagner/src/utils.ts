@@ -1,42 +1,45 @@
-export const sum = (a:number, b:number) :number => {
-  return a+b
-}
-
-
-interface Return {
+interface Dictionary {
   dictionary: Record<string,string>;
+  mappedLetters: Record<string,boolean>;
   isDictionary: boolean;
   positionsIterated: number;
 }
 
-export const isDictionary = (a: string, b:string): Return => {
-
-  if (a?.length !== b?.length) {
+export const isDictionary = (firstWord: string, secondWOrd:string): Dictionary => {
+  if (firstWord.length !== secondWOrd.length) {
     return {
       isDictionary: false,
       positionsIterated: 0,
       dictionary: {},
+      mappedLetters: {}
     };
   }
   
-  const parsedA: Array<string> = a.split('');
-  return parsedA.reduce<Return>((acc: Return, current: string, index: number) => {
-    const dictionaryValue = acc.dictionary?.[current];
+  const parsedA: Array<string> = firstWord.split('');
+
+  return parsedA.reduce<Dictionary>((acc: Dictionary, current: string, index: number) => {
+    const dictionaryValue = acc.dictionary[current];
     acc.positionsIterated = index + 1;
-    
+
     if (!dictionaryValue) {
-      acc.dictionary[current] = b[index];
+      if (acc.mappedLetters[secondWOrd[index]]) {
+        acc.isDictionary = false
+        return acc
+      }
+      acc.dictionary[current] = secondWOrd[index];
+      acc.mappedLetters[secondWOrd[index]] = true
       return acc;
     }
-    if (dictionaryValue !== b[index]) {
+    if (dictionaryValue !== secondWOrd[index]) {
       acc.isDictionary = false;
       return acc;
     }
 
+    return acc;
   }, {
     isDictionary: true,
     positionsIterated: 0,
     dictionary: {},
+    mappedLetters: {},
   });
-
 }
