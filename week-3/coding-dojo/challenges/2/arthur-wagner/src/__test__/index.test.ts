@@ -1,7 +1,7 @@
-import {sum} from "../utils";
+import {isDictionary} from "../utils";
 
-describe("run sum", () => {
-  test('adds 1 + 2 to equal 3', () => {
-    expect(sum(1, 2)).toBe(3);
+describe("run test", () => {
+  test('adadsasd', () => {
+    expect(isDictionary('egg', 'add').isDictionary).toBeTruthy();
   });
 })
