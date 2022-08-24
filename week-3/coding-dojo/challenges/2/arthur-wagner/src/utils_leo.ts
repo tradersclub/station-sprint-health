@@ -39,3 +39,25 @@ export function isIsomorphic2(word1: string, word2: string) {
   
     return true
   };
+
+  export function isIsomorphic3(word1: string, word2: string) {
+    const alphabet:Record<string,string> = {}
+    const mappedLetters:Record<string,boolean> = {}
+  
+    for (let index = 0; index < word1.length; index++) {
+        const letterWanted = alphabet[word2[index]]
+  
+        if (letterWanted && letterWanted != word1[index]) {
+            return false
+        }
+  
+        if (!letterWanted && mappedLetters[word1[index]] === true) {
+          return false
+        }
+  
+        mappedLetters[word1[index]] = true
+        alphabet[word2[index]] = word1[index]
+    }
+  
+    return true
+  };
