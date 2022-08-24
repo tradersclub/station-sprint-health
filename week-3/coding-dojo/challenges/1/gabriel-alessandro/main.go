@@ -8,31 +8,37 @@ type Fifo interface {
 }
 
 type FifoImp struct {
-	Fifo  []func()
-	Index int
+	Fifo []func()
 }
 
 func fifoImpl() Fifo {
 	return &FifoImp{
-		Fifo:  make([]func(), 0),
-		Index: 0,
+		Fifo: make([]func(), 0),
 	}
 }
 
 func (a *FifoImp) Push(value func()) {
 	a.Fifo = append(a.Fifo, value)
-	a.Index++
 }
 
 func (a *FifoImp) Pop() func() {
-	elementRemoved := a.Fifo[len(a.Fifo)-1]
-	a.Fifo = append(a.Fifo[:len(a.Fifo)-1])
+	if len(a.Fifo) <= 0 {
+		return nil
+	}
+
+	elementRemoved := a.Fifo[0]
+	a.Fifo = a.Fifo[1:]
 
 	return elementRemoved
 }
 
 func main() {
 	fifoImpl := fifoImpl()
+
+	elementRemoved := fifoImpl.Pop()
+	if elementRemoved != nil {
+		elementRemoved()
+	}
 
 	fifoImpl.Push(func() {
 		fmt.Println("1")
@@ -45,7 +51,7 @@ func main() {
 	})
 	fmt.Println(fifoImpl)
 
-	elementRemoved := fifoImpl.Pop()
+	elementRemoved = fifoImpl.Pop()
 	elementRemoved()
 	elementRemoved = fifoImpl.Pop()
 	elementRemoved()
