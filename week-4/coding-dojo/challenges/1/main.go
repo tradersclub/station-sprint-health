@@ -7,6 +7,12 @@ import (
 	"time"
 )
 
+const (
+	INACTIVATED = "inactivated"
+	ACTIVATED   = "activated"
+	NOT_FOUND   = "status not found"
+)
+
 // THIS IS THE WORST CODE IN THE WHOLE WORLD
 func main() {
 	printSomeInfos()
@@ -19,51 +25,57 @@ func printSomeInfos() {
 
 	timezone, _ := time.LoadLocation("America/New_York")
 
-	a, ln, sn := 0, "", ""
+	age, lastName, status := 0, "", ""
 
 	var wg sync.WaitGroup
 
 	wg.Add(1)
 
 	go func() {
-		a, ln, sn = getInfos(U{
-			n:  "leonardo miranda",
-			bd: time.Date(1996, 9, 02, 0, 0, 0, 0, timezone),
-			s:  1,
+		age, lastName, status = getInfos(User{
+			name:         "leonardo miranda",
+			birthdayDate: time.Date(1996, 9, 02, 0, 0, 0, 0, timezone),
+			status:       1,
 		})
 		wg.Done()
 	}()
 
 	wg.Wait()
 
-	log.Println(a)
-	log.Println(ln)
-	log.Println(sn)
+	log.Println(age)
+	log.Println(lastName)
+	log.Println(status)
 
 	mu.Unlock()
 }
 
-type U struct {
-	n  string    // name
-	bd time.Time // birthDate
-	s  int       // status
+type User struct {
+	name         string    // name
+	birthdayDate time.Time // birthDate
+	status       int       // status
 }
 
 // this code run calculation of age and get the last name
-func getInfos(u U) (int, string, string) {
-	a := int(time.Now().Sub(u.bd).Hours() / 24 / 365)
+func getInfos(u User) (int, string, string) {
+	age := getUserAge(u.birthdayDate)
 
-	fn := strings.Split(u.n, " ")
+	lastName := getLastName(u.name)
 
-	if u.s == 0 {
-		return a, fn[1], "inactivated"
+	if u.status == 0 {
+		return age, lastName, INACTIVATED
 	}
-	if u.s != 0 && u.s == 1 {
-		return a, fn[1], "activated"
-	}
-	if u.s != 0 && u.s != 1 {
-		return a, fn[1], "status not found"
+	if u.status != 0 && u.status == 1 {
+		return age, lastName, ACTIVATED
 	}
 
-	return a, fn[1], "status not found"
+	return age, lastName, NOT_FOUND
+}
+
+func getUserAge(birthdayDate time.Time) int {
+	return int(time.Now().Sub(birthdayDate).Hours() / 24 / 365)
+}
+
+func getLastName(name string) string {
+	splittedName := strings.Split(name, " ")
+	return splittedName[len(splittedName)-1]
 }
