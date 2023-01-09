@@ -24,11 +24,21 @@ func main() {
 }
 
 func poolWords(data <-chan string) {
-	str := <-data
-	for i, r := range str {
-		exist := false
-		for k, h := range str[i : len(str)-1] {
-
+	for {
+		word := <-data
+		if !checkDuplicatedLetter(word) {
+			wordsWithAlphabet = append(wordsWithAlphabet, word)
 		}
 	}
+}
+
+func checkDuplicatedLetter(word string) bool {
+	for i, letter := range word {
+		for k, next := range word[i : len(word)-1] {
+			if i != k && letter == next {
+				return true
+			}
+		}
+	}
+	return false
 }
