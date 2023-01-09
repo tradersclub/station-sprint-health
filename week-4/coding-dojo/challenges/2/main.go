@@ -24,5 +24,11 @@ func main() {
 }
 
 func poolWords(data <-chan string) {
-	// implement here
+	str := <-data
+	for i, r := range str {
+		exist := false
+		for k, h := range str[i : len(str)-1] {
+
+		}
+	}
 }
