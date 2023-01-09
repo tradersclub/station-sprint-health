@@ -13,46 +13,55 @@ const (
 	NOT_FOUND   = "status not found"
 )
 
+var statusEnum = [2]string{
+	"inactivated",
+	"activated",
+}
+
 // THIS IS THE WORST CODE IN THE WHOLE WORLD
 func main() {
-	printSomeInfos()
+	PrintSomeInfos()
 }
 
 // printSomeInfos print some infos
-func printSomeInfos() {
+func PrintSomeInfos() UserResponse {
 	var mu sync.Mutex
 	mu.Lock()
 
 	timezone, _ := time.LoadLocation("America/New_York")
 
-	age, lastName, status := 0, "", ""
+	var user UserResponse
 
 	var wg sync.WaitGroup
 
 	wg.Add(1)
 
 	go func() {
-		age, lastName, status = getInfos(User{
-			name:         "leonardo miranda",
-			birthdayDate: time.Date(1996, 9, 02, 0, 0, 0, 0, timezone),
-			status:       1,
-		})
+		user = UserResponse{lastName: getLastName("leonardo miranda"), age: getUserAge(time.Date(1996, 9, 02, 0, 0, 0, 0, timezone)), status: statusEnum[1]}
 		wg.Done()
 	}()
 
 	wg.Wait()
 
-	log.Println(age)
-	log.Println(lastName)
-	log.Println(status)
+	log.Println(user.age)
+	log.Println(user.lastName)
+	log.Println(user.status)
 
 	mu.Unlock()
+
+	return user
 }
 
 type User struct {
 	name         string    // name
 	birthdayDate time.Time // birthDate
 	status       int       // status
+}
+
+type UserResponse struct {
+	lastName string // last name
+	age      int    // birthDate
+	status   string // status
 }
 
 // this code run calculation of age and get the last name
@@ -64,7 +73,7 @@ func getInfos(u User) (int, string, string) {
 	if u.status == 0 {
 		return age, lastName, INACTIVATED
 	}
-	if u.status != 0 && u.status == 1 {
+	if u.status == 1 {
 		return age, lastName, ACTIVATED
 	}
 
