@@ -50,11 +50,13 @@ Output função calcular idade:
 [
     {
         name: "leo",
-        birthYear: 27
+        birthYear: 1996,
+        age: 27
     },
     {
         name: "robertin",
-        birthYear: 23
+        birthYear: 2000,
+        age: 23,
     },
     {
         name: "theo",
