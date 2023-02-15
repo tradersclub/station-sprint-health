@@ -1,4 +1,3 @@
-import {sum} from "./utils";
 
 import { resize as easyimageResize } from "easyimage";
 
@@ -24,8 +23,8 @@ const imagePathDestination = './imagens/resized'
 // })();
 
 
-class RedimensionaImagem implements Image {
-    async resize(inputPath: string, outputPath: string, width: number, height: number): void {
+class AdaptadorEasyImage implements Image {
+    async resize(inputPath: string, outputPath: string, width: number, height: number): Promise<void> {
         await easyimageResize({
             src: inputPath,
             width: width,
@@ -35,4 +34,8 @@ class RedimensionaImagem implements Image {
     }
 }
 
+const easyWhatever = new AdaptadorEasyImage();
+
+const something = easyWhatever.resize(imagePath, imagePathDestination, 10, 10);
 // console.log(sum(2,3))
+console.log('hello world');
