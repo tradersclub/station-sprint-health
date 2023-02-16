@@ -14,7 +14,7 @@
     "test": "jest",
     "bench": "ts-node ./src/bench_test",
     "build": "tsc --build",
-    "start": "ts-node ./src"
+    "start": "ts-node ./src/index.ts"
   },
   "keywords": [],
   "author": "",
