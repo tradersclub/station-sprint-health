@@ -19,6 +19,10 @@ func Resizer(imageResizerAdapter Image, inputPath string, outputPath string, wid
 
 type ImgconvAdapter struct{}
 
+// func Resizer() Image {
+// 	return ImgconvAdapter{}
+// }
+
 func (i ImgconvAdapter) Resize(inputPath string, outputPath string, width int, height int) error {
 	src, err := imgconv.Open(inputPath)
 	if err != nil {
@@ -34,5 +38,5 @@ func main() {
 	imagePathDestination := fmt.Sprintf("imagens/resized/new%s.jpg", strconv.FormatInt(time.Now().UnixMilli(), 10))
 
 	imgconvAdapter := ImgconvAdapter{}
-	imgconvAdapter.Resize(imagePath, imagePathDestination, 50, 50)
+	Resizer(imgconvAdapter, imagePath, imagePathDestination, 50, 50)
 }
